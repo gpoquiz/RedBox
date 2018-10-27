@@ -1,22 +1,22 @@
 package Redbox;
 
-public class Node <E extends Comparable<E>>
+public class Node <Payload extends Comparable<Payload>> implements Comparable<Node<Payload>>, LeftRightPointable
 {
 	// members for navigation
-	Node <E> left;
-	Node <E> right;
+	private Node <Payload> left;
+	private Node <Payload> right;
 	// will hold container class for data
-	E payload;
+	private Payload payload;
 
 	// generic getters
-	public Node<E> getLeft(){return left;}
-	public Node<E> getRight(){return right;}
-	public E getPayload(){return payload;}
+	public LeftRightPointable getLeft(){return left;}
+	public LeftRightPointable getRight(){return right;}
+	public Payload getPayload(){return payload;}
 
 	// generic setters
-	public void setLeft(Node<E> left){this.left = left;}
-	public void setRight(Node<E> right){this.right = right;}
-	public void setPayload(E payload){this.payload = payload;}
+	public void setLeft(Node<Payload> left){this.left = left;}
+	public void setRight(Node<Payload> right){this.right = right;}
+	public void setPayload(Payload payload){this.payload = payload;}
 	
 	// default constructor
 	public Node()
@@ -25,9 +25,14 @@ public class Node <E extends Comparable<E>>
 		payload = null;
 	}
 	// overloaded constructor
-	public Node(E payload)
+	public Node(Payload payload)
 	{
 		this();
 		this.payload = payload;
+	}
+	@Override
+	public int compareTo(Node<Payload> item)
+	{
+		return payload.compareTo(item.getPayload());
 	}
 }
