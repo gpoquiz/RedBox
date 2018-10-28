@@ -3,6 +3,7 @@ package Redbox;
 public class BinaryNode <E extends Comparable<E>> implements Comparable<BinaryNode<E>>
 {
 	// members for navigation
+	private BinaryNode <E> parent;
 	private BinaryNode <E> left;
 	private BinaryNode <E> right;
 	// will hold container class for data
@@ -11,6 +12,7 @@ public class BinaryNode <E extends Comparable<E>> implements Comparable<BinaryNo
 	// generic getters
 	public BinaryNode<E> getLeft(){return left;}
 	public BinaryNode<E> getRight(){return right;}
+	public int getNumChildren(){return ((left == null) ? 0 : 1) + ((right == null) ? 0 : 1);}
 	public E getPayload(){return payload;}
 
 	// generic setters
@@ -21,7 +23,7 @@ public class BinaryNode <E extends Comparable<E>> implements Comparable<BinaryNo
 	// default constructor
 	public BinaryNode()
 	{
-		left = right = null;
+		left = right =  parent = null;
 		payload = null;
 	}
 	// overloaded constructor
