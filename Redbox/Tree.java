@@ -75,36 +75,88 @@ public class Tree <Payload extends Comparable<Payload>> implements Cloneable
 		}
 	}
 	// main recursor for insert function
-	private void insert(BinaryNode<Payload> cur, BinaryNode<Payload> item)
+	private void insert(BinaryNode<Payload> cur, BinaryNode<Payload> newNode)
 	{
 		if(cur == null)
 			return;
-		if (item.getPayload().compareTo(cur.getPayload()) < 0)
+		if (newNode.getPayload().compareTo(cur.getPayload()) < 0)
 		{
 			if (cur.getLeft() == null)
-				cur.setLeft(item);
+				cur.setLeft(newNode);
 			else
-				insert(cur.getLeft(), item);
+				insert(cur.getLeft(), newNode);
 		}
-		else if (item.getPayload().compareTo(cur.getPayload()) > 0)
+		else if (newNode.getPayload().compareTo(cur.getPayload()) > 0)
 		{
 			if (cur.getRight() == null)
-				cur.setRight(item);
+				cur.setRight(newNode);
 			else
-				insert(cur.getRight(), item);
+				insert(cur.getRight(), newNode);
 		}
 	}
-	
+	public BinaryNode<Payload> getParent(BinaryNode<Payload> search)
+	{
+		BinaryNode<Payload> cur = root;
+		if (cur.compareTo(search) == 0)
+			return null;
+		while (cur != null)
+		{
+			if (search.compareTo(cur) < 0)
+			{
+				if (cur.getLeft().compareTo(search) == 0)
+					return cur;
+				else
+					cur = cur.getLeft();
+			}
+			else if (search.compareTo(cur) > 0)
+			{
+				if (cur.getRight().compareTo(search) == 0)
+					return cur;
+				else
+					cur = cur.getRight();
+			}
+		}
+		
+		return null;
+	}
 	public Payload delete(Payload Search)
 	{
-		BinaryNode<Payload> deletion = search(Search);
-		switch(deletion.getNumChildren())
+	//	BinaryNode<Payload> deletion = search(Search);
+		BinaryNode<Payload> parent = root;
+		
+		switch(search(Search).getNumChildren())
 		{
 		case 0:
-			
+			while (parent != null)
+			{
+				if (Search.compareTo(parent.getPayload()) < 0)
+				{
+					if (parent.getLeft().getPayload().compareTo(Search) == 0)
+					{
+						parent.setLeft(null);
+						return Search;
+						break;
+					}
+					else
+						parent = parent.getLeft();
+				}
+				else if (Search.compareTo(parent.getPayload()) > 0)
+				{
+					if (parent.getRight().getPayload().compareTo(Search) == 0)
+					{
+						parent.setRight(null);
+						return Search;
+						break;
+					}
+					else
+						parent = parent.getRight();
+				}
+			}
+			break;
 		}
-		return return deletion.getPayload();
+		return deletion.getPayload();
 	}
+
 	@Override
 	public String toString()
 	{
